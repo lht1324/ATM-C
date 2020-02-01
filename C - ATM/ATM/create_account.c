@@ -5,37 +5,36 @@
 #include "client_info.h"
 #include "function.h"
 
-int create_account(int count) // °èÁÂ¸¦ »õ·Î »ý¼ºÇÏ´Â ÇÔ¼öÀÌ´Ù.
-{	// count = ÃÑ °í°´ÀÇ ¼öÀÌ´Ù.
+int create_account(int count) // ê³„ì¢Œë¥¼ ìƒˆë¡œ ìƒì„±í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+{	
 	int i, account_check = 0, end;
-	// i : ¹Ýº¹¹®¿¡ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù. 
-	// account_check : °èÁÂ¹øÈ£ »ý¼º ½Ã ±âÁ¸ °èÁÂ¹øÈ£ Áß
-	// °°Àº ¹øÈ£°¡ ÀÖ´ÂÁö ¾ø´ÂÁö È®ÀÎÇÒ ¶§ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù.
-	// end : °èÁÂ »ý¼º ÈÄ ÃÊ±â È­¸éÀ¸·Î µ¹¾Æ°¥ Áö ¿©ºÎ¸¦ ¹°À» ¶§ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù.
-	char str_a[22], str_n[18], str_b[21], password[5], name[13], fp[17];
-	// str_a : str_account, °èÁÂ¸¦ »ý¼ºÇØ ÀÓ½Ã·Î ÀúÀåÇÏ±â À§ÇÑ ¹®ÀÚ¿­ÀÌ´Ù.
-	// str_n : str_name, ÀÌ¸§À» ÀÔ·Â¹ÞÀº µÚ ÀÓ½Ã·Î ÀúÀåÇÏ±â À§ÇÑ ¹®ÀÚ¿­ÀÌ´Ù.
-	// str_b : str_balance, ÀÜ°í¸¦ ÀÓ½Ã·Î ÀúÀåÇÏ±â À§ÇÑ ¹®ÀÚ¿­ÀÌ´Ù.
-	// fp : È­¸é¿¡ °èÁÂ¹øÈ£¸¦ Ãâ·ÂÇÏ±â À§ÇØ ÀÓ½Ã·Î °èÁÂ¹øÈ£°¡ ÀúÀåµÇ´Â ¹®ÀÚ¿­ÀÌ´Ù.
+	// account_check : ê³„ì¢Œë²ˆí˜¸ ìƒì„± ì‹œ ê¸°ì¡´ ê³„ì¢Œë²ˆí˜¸ ì¤‘ ê°™ì€ ë²ˆí˜¸ê°€ ìžˆëŠ”ì§€ ì—†ëŠ”ì§€ í™•ì¸í•  ë•Œ ì‚¬ìš©ë˜ëŠ” ë³€ìˆ˜ì´ë‹¤.
+	// end : end == 0ì´ë©´ í•¨ìˆ˜ê°€ ì¢…ë£Œëœë‹¤.
 	
-	// ÀÌ¸§, °èÁÂ¹øÈ£, ÀÜ°í°¡ ÆÄÀÏ¿¡ ¾²¿©Áú ¶§ ¾ÕÀÇ 5ÀÚ¸®¿£ ºñ¹Ð¹øÈ£ 4ÀÚ¸®¿Í °ø¹é 1ÀÚ¸®°¡
-	// ¾²ÀÎ´Ù. 3°³ÀÇ ÆÄÀÏ¿¡ ¾²ÀÎ ºñ¹Ð¹øÈ£°¡ ¸ðµÎ ¸Â´Ù¸é ÆÄÀÏÀº º¯Á¶µÇÁö ¾ÊÀº °ÍÀÌ´Ù.
+	char str_a[22], str_n[18], str_b[21], password[5], name[13], fp[17];
+	// str_a : str_account, ê³„ì¢Œë¥¼ ìƒì„±í•´ ìž„ì‹œë¡œ ì €ìž¥í•˜ê¸° ìœ„í•œ ë¬¸ìžì—´ì´ë‹¤.
+	// str_n : str_name, ì´ë¦„ì„ ìž…ë ¥ë°›ì€ ë’¤ ìž„ì‹œë¡œ ì €ìž¥í•˜ê¸° ìœ„í•œ ë¬¸ìžì—´ì´ë‹¤.
+	// str_b : str_balance, ìž”ê³ ë¥¼ ìž„ì‹œë¡œ ì €ìž¥í•˜ê¸° ìœ„í•œ ë¬¸ìžì—´ì´ë‹¤.
+	// fp : í™”ë©´ì— ê³„ì¢Œë²ˆí˜¸ë¥¼ ì¶œë ¥í•˜ê¸° ìœ„í•´ ìž„ì‹œë¡œ ê³„ì¢Œë²ˆí˜¸ê°€ ì €ìž¥ë˜ëŠ” ë¬¸ìžì—´ì´ë‹¤.
+	
+	// ì´ë¦„, ê³„ì¢Œë²ˆí˜¸, ìž”ê³ ê°€ íŒŒì¼ì— ì“°ì—¬ì§ˆ ë•Œ ì•žì˜ 5ìžë¦¬ì—” ë¹„ë°€ë²ˆí˜¸ 4ìžë¦¬ì™€ ê³µë°± 1ìžë¦¬ê°€
+	// ì“°ì¸ë‹¤. 3ê°œì˜ íŒŒì¼ì— ì“°ì¸ ë¹„ë°€ë²ˆí˜¸ê°€ ëª¨ë‘ ë§žë‹¤ë©´ íŒŒì¼ì€ ë³€ì¡°ë˜ì§€ ì•Šì€ ê²ƒì´ë‹¤.
 	FILE *afp1;
 	FILE *afp2;
 	FILE *afp3;
-	// ÆÄÀÏ Æ÷ÀÎÅÍ afp1, afp2, afp3¸¦ ¼±¾ðÇÑ´Ù.
+	
 	fopen_s(&afp1, "acc.txt", "a");
 	fopen_s(&afp2, "name.txt", "a");
 	fopen_s(&afp3, "balance.txt", "a");
-	// acc.txt, name.txt, balance.txt¸¦ Ãß°¡ ¸ðµå·Î ¿¬´Ù.
-	printf("¼ºÇÔÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
-	scanf_s("%s", name, 13); // ÀÌ¸§À» ÀÔ·Â¹Þ´Â´Ù.
+	// acc.txt, name.txt, balance.txtë¥¼ ì¶”ê°€ ëª¨ë“œë¡œ ì—°ë‹¤.
+	
+	printf("ì„±í•¨ì„ ìž…ë ¥í•´ì£¼ì„¸ìš” : ");
+	scanf_s("%s", name, 13); // ì´ë¦„ì„ ìž…ë ¥ë°›ëŠ”ë‹¤.
+	name[strlen(name)] = '\0';
 
-	name[strlen(name)] = '\0'; // nameÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
-
-	printf("\n4ÀÚ¸®ÀÇ ºñ¹Ð¹øÈ£¸¦ Á¤ÇØÁÖ¼¼¿ä : ");
-	scanf_s("%s", password, 5); // ºñ¹Ð¹øÈ£¸¦ ÀÔ·Â¹Þ´Â´Ù.
-	password[4] = '\0'; // passwordÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
+	printf("\n4ìžë¦¬ì˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì •í•´ì£¼ì„¸ìš” : ");
+	scanf_s("%s", password, 5); // ë¹„ë°€ë²ˆí˜¸ë¥¼ ìž…ë ¥ë°›ëŠ”ë‹¤.
+	password[4] = '\0';
 	
 	printf("\n");
 
@@ -52,16 +51,17 @@ int create_account(int count) // °èÁÂ¸¦ »õ·Î »ý¼ºÇÏ´Â ÇÔ¼öÀÌ´Ù.
 			str_n[4] = ' ';
 			str_b[4] = ' ';
 		}
-	}	// °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°íÀÇ ¾Õ 5ÀÚ¸®¿¡ ºñ¹Ð¹øÈ£¿Í °ø¹é 1ÀÚ¸®¸¦ ³Ö´Â´Ù.
+	}	// ê³„ì¢Œë²ˆí˜¸, ì´ë¦„, ìž”ê³ ì˜ ì•ž 5ìžë¦¬ì— ë¹„ë°€ë²ˆí˜¸ì™€ ê³µë°± 1ìžë¦¬ë¥¼ ë„£ëŠ”ë‹¤.
 
 	for (i = 0; i < 17; i++)
 	{
 		str_n[i + 5] = name[i];
-	}	// ºñ¹Ð¹øÈ£°¡ ¾²¿©Áø str_n[i + 5]¿¡ name[i]¸¦ ´ëÀÔÇÑ´Ù.
-		// <ºñ¹Ð¹øÈ£ 5ÀÚ¸® + ÀÌ¸§> ÀÇ Çü½ÄÀÌ µÈ´Ù.
+	}	
+	// ë¹„ë°€ë²ˆí˜¸ê°€ ì“°ì—¬ì§„ str_n[i + 5]ì— name[i]ë¥¼ ëŒ€ìž…í•œë‹¤.
+	// <ë¹„ë°€ë²ˆí˜¸ 5ìžë¦¬ + ì´ë¦„> ì˜ í˜•ì‹ì´ ëœë‹¤.
 
 	srand((unsigned)time(NULL));
-	// ½Ã°£¿¡ µû¶ó ´Ù¸¥ ¼ýÀÚ¸¦ Ãâ·ÂÇÏ°Ô ÇØÁØ´Ù. ÀÌ°Ô ¾ø´Ù¸é ·£´ý°ªÀÌ ÇÑ ¹ø¸¸ Ãâ·ÂµÈ´Ù.
+	
 	while (account_check == 0)
 	{
 		for (i = 5; i < 21; i++)
@@ -74,11 +74,11 @@ int create_account(int count) // °èÁÂ¸¦ »õ·Î »ý¼ºÇÏ´Â ÇÔ¼öÀÌ´Ù.
 				str_a[i] = '-';
 				fp[i - 5] = '-';
 			}
-		}	// °èÁÂ¸¦ ·£´ýÀ¸·Î »ý¼ºÇÏ´Â for¹®ÀÌ´Ù.
+		}	// ê³„ì¢Œë¥¼ ëžœë¤ìœ¼ë¡œ ìƒì„±í•˜ëŠ” forë¬¸ì´ë‹¤.
 		
 		str_a[21] = '\0';
 		fp[16] = '\0';
-		// str_a, fpÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
+		
 		for (i = 0; i < count; i++)
 		{
 			if (strncmp(fp, s[i].acc, 17) == 0)
@@ -86,29 +86,30 @@ int create_account(int count) // °èÁÂ¸¦ »õ·Î »ý¼ºÇÏ´Â ÇÔ¼öÀÌ´Ù.
 			else
 				account_check = 1;
 		}	
-		// ±¸Á¶Ã¼ °èÁÂ¹øÈ£ Ç×¸ñÀ» ÈÈ¾î »õ·Î »ý¼ºµÈ °èÁÂ¹øÈ£¿Í °°Àº ¹øÈ£°¡ ÀÖ´Ù¸é 
-		// °èÁÂ¹øÈ£¸¦ ´Ù½Ã »ý¼ºÇÑ´Ù.
+		// êµ¬ì¡°ì²´ ê³„ì¢Œë²ˆí˜¸ í•­ëª©ì„ í›‘ì–´ ìƒˆë¡œ ìƒì„±ëœ ê³„ì¢Œë²ˆí˜¸ì™€ ê°™ì€ ë²ˆí˜¸ê°€ ìžˆë‹¤ë©´ 
+		// ê³„ì¢Œë²ˆí˜¸ë¥¼ ë‹¤ì‹œ ìƒì„±í•œë‹¤.
 	}
-	str_b[5] = '0'; // Ã³À½ ¸¸µé¾îÁö´Â °èÁÂÀÌ´Ï ÀÜ°í´Â 0À¸·Î ÇÑ´Ù.
-	str_b[6] = '\0'; // str_bÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
+	str_b[5] = '0'; // ì²˜ìŒ ë§Œë“¤ì–´ì§€ëŠ” ê³„ì¢Œì´ë‹ˆ ìž”ê³ ëŠ” 0ìœ¼ë¡œ í•œë‹¤.
+	str_b[6] = '\0';
 
 	fprintf(afp1, "%s\n", str_a);
 	fprintf(afp2, "%s\n", str_n);
 	fprintf(afp3, "%s\n", str_b);
-	// str_a, str_n, str_b¸¦ °¢°¢ acc.txt, name.txt, balance.txt¿¡ Ãß°¡·Î ¾´´Ù.
+	// str_a, str_n, str_bë¥¼ ê°ê° acc.txt, name.txt, balance.txtì— ì¶”ê°€ë¡œ ì“´ë‹¤.
+	
 	fclose(afp1);
 	fclose(afp2);
 	fclose(afp3);
-	// afp1, afp2, afp3¸¦ ´Ý´Â´Ù.
-	printf("°èÁÂ°¡ »ý¼ºµÇ¾ú½À´Ï´Ù. %s °í°´´ÔÀÇ °èÁÂ¹øÈ£´Â %sÀÔ´Ï´Ù.\n\n", name, fp);
+	
+	printf("ê³„ì¢Œê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤. %s ê³ ê°ë‹˜ì˜ ê³„ì¢Œë²ˆí˜¸ëŠ” %sìž…ë‹ˆë‹¤.\n\n", name, fp);
 	
 	while (1)
 	{
-		printf("ÃÊ±â È­¸éÀ¸·Î °¡½Ã·Á¸é 0À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
+		printf("ì´ˆê¸° í™”ë©´ìœ¼ë¡œ ê°€ì‹œë ¤ë©´ 0ì„ ìž…ë ¥í•´ì£¼ì„¸ìš” : ");
 		scanf_s("%d", &end);
-		if (end == 0) // end¿¡ 0À» ÀÔ·Â¹ÞÀ¸¸é create_account() ÇÔ¼ö¸¦ Á¾·áÇÑ´Ù.
+		if (end == 0) // endì— 0ì„ ìž…ë ¥ë°›ìœ¼ë©´ create_account() í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
 			return 0;
 		else
-			printf("\nÀß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n\n");
+			printf("\nìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n\n");
 	}
 }

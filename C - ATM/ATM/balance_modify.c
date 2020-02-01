@@ -2,30 +2,30 @@
 #include "client_info.h"
 #include "function.h"
 
-void balance_modify() // ÀÜ°í ºÎºÐ ¼öÁ¤À» À§ÇØ ¸¸µç ÄÚµå.
-{	 // »ç¿ëµÇ´Â °÷ÀÌ ¸¹¾Æ ÀÔ±Ý, Ãâ±Ý, ÀÌÃ¼ µîÀÇ ÄÚµåµéÀÌ ±æ¾îÁ® C ÆÄÀÏ·Î ¹­¾ú´Ù.
+void balance_modify() // ìž”ê³  ë¶€ë¶„ ìˆ˜ì •ì„ ìœ„í•´ ë§Œë“  ì½”ë“œ.
+{	
 	char str[21];
-	// ¹«ÇÑ ¹Ýº¹¹®¿¡¼­ »ç¿ëµÇ´Â ±æÀÌ 21ÀÇ ¹®ÀÚ¿­ strÀ» ¼±¾ðÇÑ´Ù.
+	// ë¬´í•œ ë°˜ë³µë¬¸ì—ì„œ ì‚¬ìš©ë˜ëŠ” ê¸¸ì´ 21ì˜ ë¬¸ìžì—´ strì„ ì„ ì–¸í•œë‹¤.
+	
 	FILE *rfp;
 	FILE *wfp;
-	// ÆÄÀÏ Æ÷ÀÎÅÍ rfp, wfp¸¦ ¼±¾ðÇÑ´Ù.
+	// íŒŒì¼ í¬ì¸í„° rfp, wfpë¥¼ ì„ ì–¸í•œë‹¤.
 	fopen_s(&rfp, "balance_temp.txt", "r");
 	fopen_s(&wfp, "balance.txt", "w");
-	// balance_temp.txt¸¦ ÀÐ±â ¸ðµå·Î, balance.txt¸¦ ¾²±â ¸ðµå·Î ¿¬´Ù.
-	// ÀÔ±Ý, Ãâ±Ý, °èÁÂ ÀÌÃ¼ ÇÔ¼ö¿¡¼­ balance_temp.txt¿¡ ¼öÁ¤µÈ balance.txtÀÇ ³»¿ëÀ»
-	// ÀÛ¼ºÇß´Ù. ÀÌ ÇÔ¼ö¸¦ ÀÌ¿ëÇØ balance_temp.txt¿¡ ÀÔ·ÂµÈ »õ·Î¿î ÀÜ°í Á¤º¸¸¦ ´Ù½Ã
-	// balance.txt¿¡ µ¤¾î¾´´Ù.
-	while(1) // ¹«ÇÑ ¹Ýº¹¹®ÀÌ´Ù.
+	// ìž…ê¸ˆ, ì¶œê¸ˆ, ê³„ì¢Œ ì´ì²´ í•¨ìˆ˜ì—ì„œ balance_temp.txtì— ìˆ˜ì •ëœ balance.txtì˜ ë‚´ìš©ì„
+	// ìž‘ì„±í–ˆë‹¤. ì´ í•¨ìˆ˜ë¥¼ ì´ìš©í•´ balance_temp.txtì— ìž…ë ¥ëœ ìƒˆë¡œìš´ ìž”ê³  ì •ë³´ë¥¼ ë‹¤ì‹œ
+	// balance.txtì— ë®ì–´ì“´ë‹¤.
+	
+	while(1)
 	{
-		fgets(str, sizeof(str), rfp); // balance_temp.txt¸¦ ÇÑ ÁÙ¾¿ ÀÐ´Â´Ù.
+		fgets(str, sizeof(str), rfp); // balance_temp.txtë¥¼ í•œ ì¤„ì”© ì½ëŠ”ë‹¤.
 
-		if (feof(rfp)) // ÆÄÀÏÀÇ ³¡ÀÌ¶ó¸é Á¾·áÇÑ´Ù.
+		if (feof(rfp)) // íŒŒì¼ì˜ ëì´ë¼ë©´ ì¢…ë£Œí•œë‹¤.
 			break;
 
-		fprintf(wfp, "%s", str); // ÀÐ¾îµéÀÎ ³»¿ëÀ» balance.txt¿¡ µ¤¾î¾´´Ù.
+		fprintf(wfp, "%s", str); // ì½ì–´ë“¤ì¸ ë‚´ìš©ì„ balance.txtì— ë®ì–´ì“´ë‹¤.
 	}
 
 	fclose(rfp);
 	fclose(wfp);
-	// rfp, wfp¸¦ ´Ý´Â´Ù.
 }

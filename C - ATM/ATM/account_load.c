@@ -4,54 +4,59 @@
 #include "client_info.h"
 
 int account_load()
-{	// °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í¸¦ ±â·ÏÇÑ ÅØ½ºÆ® ÆÄÀÏ¿¡¼­ °í°´ Á¤º¸¸¦ ÀÐ¾î ±¸Á¶Ã¼ ¹è¿­¿¡ ÀúÀåÇÑ´Ù.
-	// ±¸Á¶Ã¼ ¹è¿­Àº µ¿ÀûÇÒ´çÀ¸·Î ¼±¾ðÇÑ´Ù.
+{	// ê³„ì¢Œë²ˆí˜¸, ì´ë¦„, ìž”ê³ ë¥¼ ê¸°ë¡í•œ í…ìŠ¤íŠ¸ íŒŒì¼ì—ì„œ ê³ ê° ì •ë³´ë¥¼ ì½ì–´ êµ¬ì¡°ì²´ ë°°ì—´ì— ì €ìž¥í•œë‹¤.
+	// êµ¬ì¡°ì²´ ë°°ì—´ì€ ë™ì í• ë‹¹ìœ¼ë¡œ ì„ ì–¸í•œë‹¤.
 	int count = 1;
 	char str_a[30], str_n[30], str_b[30];
-	// count : ÃÑ °í°´ ¼ö. ÆÄÀÏÀÇ ³¡±îÁö ÀÐ´Â ¹Ýº¹¹®ÀÌ ½ÇÇàµÇ¾î¾ß ÇÏ´Ï ÀÐÀ» ¶§¸¶´Ù
-	// 1¾¿ Ãß°¡µÇ°í, ÆÄÀÏÀÇ ³¡±îÁö ÀÐÀ¸¸é 1À» »« count¸¦ Ãâ·ÂÇÑ´Ù. ¹Ýº¹¹®¿¡¼­ 
-	// feof°¡ count++º¸´Ù ¾Õ¿¡ ÀÖ±â ¶§¹®¿¡ count°¡ °í°´¼öº¸´Ù 1ÀÌ ´õ ´õÇØÁö±â ¶§¹®ÀÌ´Ù.
+	// count : ì´ ê³ ê° ìˆ˜. íŒŒì¼ì˜ ëê¹Œì§€ ì½ëŠ” ë°˜ë³µë¬¸ì´ ì‹¤í–‰ë˜ì–´ì•¼ í•˜ë‹ˆ ì½ì„ ë•Œë§ˆë‹¤
+	// 1ì”© ì¶”ê°€ë˜ê³ , íŒŒì¼ì˜ ëê¹Œì§€ ì½ìœ¼ë©´ 1ì„ ëº€ countë¥¼ ì¶œë ¥í•œë‹¤. ë°˜ë³µë¬¸ì—ì„œ 
+	// feofê°€ count++ë³´ë‹¤ ì•žì— ìžˆê¸° ë•Œë¬¸ì— countê°€ ê³ ê°ìˆ˜ë³´ë‹¤ 1ì´ ë” ë”í•´ì§€ê¸° ë•Œë¬¸ì´ë‹¤.
+	
 	s = (struct info*) calloc(sizeof(struct info), count);
-	// ±¸Á¶Ã¼ Çì´õ ÆÄÀÏ¿¡¼­ ¼±¾ðµÈ ±¸Á¶Ã¼ Æ÷ÀÎÅÍ º¯¼ö s¸¦ count¸¸Å­ 
-	// calloc ÇÔ¼ö¸¦ »ç¿ëÇØ µ¿ÀûÇÒ´çÇÑ´Ù.
+	// client_info.hì—ì„œ ì„ ì–¸ëœ êµ¬ì¡°ì²´ í¬ì¸í„° ë³€ìˆ˜ së¥¼ countë§Œí¼ ë™ì í• ë‹¹í•œë‹¤.
+	
 	FILE *rfp1;
 	FILE *rfp2;
 	FILE *rfp3;
-	// ÆÄÀÏÆ÷ÀÎÅÍ¸¦ ¼±¾ðÇÑ´Ù.
+	
 	fopen_s(&rfp1, "acc.txt", "r");
 	fopen_s(&rfp2, "name.txt", "r");
 	fopen_s(&rfp3, "balance.txt", "r");
-	// °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í ÅØ½ºÆ® ÆÄÀÏÀ» ÀÐ±â ¸ðµå·Î ¿¬´Ù.
-	while (1) // ¹«ÇÑ ¹Ýº¹ÇÏ´Â while¹®ÀÌ´Ù.
+	// ê³„ì¢Œë²ˆí˜¸, ì´ë¦„, ìž”ê³  í…ìŠ¤íŠ¸ íŒŒì¼ì„ ì½ëŠ”ë‹¤.
+	
+	while (1) // ë¬´í•œ ë°˜ë³µí•˜ëŠ” whileë¬¸ì´ë‹¤.
 	{
 		fgets(str_a, sizeof(str_a), rfp1);
 		fgets(str_n, sizeof(str_n), rfp2);
 		fgets(str_b, sizeof(str_b), rfp3);
-		// °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í ÅØ½ºÆ® ÆÄÀÏÀ» ÇÑ ÁÙ¾¿ ÀÐ´Â´Ù.
+		// ê³„ì¢Œë²ˆí˜¸, ì´ë¦„, ìž”ê³  í…ìŠ¤íŠ¸ íŒŒì¼ì„ í•œ ì¤„ì”© ì½ëŠ”ë‹¤.
+		
 		if (feof(rfp1) && feof(rfp2) && feof(rfp3))
 		{
 			count--;
 			break;
-		} // ÅØ½ºÆ® ÆÄÀÏµéÀÇ ³¡ÀÌ¶ó¸é count¿¡¼­ 1À» »« µÚ ¹«ÇÑ¹Ýº¹À» Á¾·áÇÑ´Ù.
+		} // í…ìŠ¤íŠ¸ íŒŒì¼ë“¤ì˜ ëì´ë¼ë©´ countì—ì„œ 1ì„ ëº€ ë’¤ ë¬´í•œë°˜ë³µì„ ì¢…ë£Œí•œë‹¤.
 		
 		str_a[strlen(str_a)] = '\0';
 		str_n[strlen(str_n)] = '\0';
 		str_b[strlen(str_b)] = '\0';
-		// str_a, str_n, str_bÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
+		// str_a, str_n, str_bì˜ ë§ˆì§€ë§‰ ì›ì†Œì— NULL ê°’ì„ ëŒ€ìž…í•œë‹¤.
+		
 		strcpy_s(s[count - 1].acc, sizeof(str_a), str_a);
 		strcpy_s(s[count - 1].name, sizeof(str_n), str_n);
 		strcpy_s(s[count - 1].balance, sizeof(str_b), str_b);
-		// ±¸Á¶Ã¼¿¡ ÀÐ¾îµéÀÎ °í°´ Á¤º¸¸¦ ÀúÀåÇÑ´Ù. count´Â 0ÀÌ ¾Æ´Ñ 1ºÎÅÍ ½ÃÀÛÇÏ´Â ¼öÀÌ´Ï
-		// 1À» »©°í ±¸Á¶Ã¼¿¡ ÀÎµ¦½º·Î »ç¿ëÇÑ´Ù.
-		count++; // ÀüºÎ ÀÐÀ¸¸é count¿¡ 1À» ´õÇÑ´Ù.
+		// êµ¬ì¡°ì²´ì— ì½ì–´ë“¤ì¸ ê³ ê° ì •ë³´ë¥¼ ì €ìž¥í•œë‹¤. countëŠ” 0ì´ ì•„ë‹Œ 1ë¶€í„° ì‹œìž‘í•˜ëŠ” ìˆ˜ì´ë‹ˆ
+		// 1ì„ ë¹¼ê³  êµ¬ì¡°ì²´ì— ì¸ë±ìŠ¤ë¡œ ì‚¬ìš©í•œë‹¤.
+		
+		count++; // ì „ë¶€ ì½ìœ¼ë©´ countì— 1ì„ ë”í•œë‹¤.
 
 		s = (struct info*) realloc(s, sizeof(struct info) * count);
-		// 1ÀÌ ´õÇØÁø count¸¸Å­ realloc ÇÔ¼ö¸¦ »ç¿ëÇØ µ¿Àû ¸Þ¸ð¸®¸¦ ÀçÇÒ´çÇÑ´Ù.
+		// 1ì´ ë”í•´ì§„ countë§Œí¼ ë™ì  ë©”ëª¨ë¦¬ë¥¼ ìž¬í• ë‹¹í•œë‹¤.
 	}
 
 	fclose(rfp1);
 	fclose(rfp2);
 	fclose(rfp3);
-	// ÆÄÀÏ Æ÷ÀÎÅÍ rfp1, rfp2, rfp3¸¦ ´Ý´Â´Ù.
-	return count; // ÃÑ °í°´ÀÌ ¸î ¸íÀÎÁö ³ªÅ¸³»´Â º¯¼ö count¸¦ Ãâ·ÂÇÑ´Ù.
+	
+	return count; // ì´ ê³ ê°ì´ ëª‡ ëª…ì¸ì§€ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜ countë¥¼ ì¶œë ¥í•œë‹¤.
 }

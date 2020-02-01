@@ -4,13 +4,15 @@
 #include "client_info.h"
 #include "function.h"
 
-void delete_account(int client) // °èÁÂ Á¦°Å¸¦ ÇÏ´Â ÇÔ¼öÀÌ´Ù.
-{	// ÀÌ ÇÔ¼ö´Â ±âº»ÀûÀ¸·Î ÆÄÀÏ¿¡¼­ ÀÐÀº µÚ ¾²´Â ±â´ÉÀ» ÇÏ´Âµ¥, Áö¿ï ºÎºÐÀ»
-	// ÀÐ±â¸¸ ÇÏ°í ¾²Áö ¾Ê´Â ¹æ½ÄÀ¸·Î ÆÄÀÏ¿¡¼­ °í°´ÀÇ °èÁÂ Á¤º¸¸¦ »èÁ¦ÇÑ´Ù. 
-	int i, end; // i : ¹Ýº¹¹® »ç¿ëÀ» À§ÇÑ º¯¼öÀÌ´Ù. 
-						// end : °í°´¿¡°Ô ÃÊ±â È­¸éÀ¸·Î °¥ Áö ¹°À» ¶§ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù.
+void delete_account(int client) // ê³„ì¢Œ ì œê±°ë¥¼ í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
+{	
+	// íŒŒì¼ ìˆ˜ì •ì´ ì¼ì–´ë‚  ë•Œ ì „ì²´ íŒŒì¼ì˜ ë‚´ìš©ì„ í•œ ë²ˆ ì½ê³  ë‹¤ì‹œ ì“°ëŠ” ë°©ì‹ìœ¼ë¡œ ìˆ˜ì •í•˜ëŠ”ë°,
+	// ì½ì€ ë’¤ ì‚­ì œí•  ë¶€ë¶„ì„ ì“°ì§€ ì•ŠëŠ” ë°©ì‹ìœ¼ë¡œ íŒŒì¼ì—ì„œ ê³ ê°ì˜ ê³„ì¢Œ ì •ë³´ë¥¼ ì‚­ì œí•œë‹¤. 
+	int i, end; 
+	// end : end == 0ì´ë©´ í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
+	
 	char acc[30], name[30], bal[30];
-	// acc.txt, name.txt, bal.txt¿¡¼­ ÀÐÀº ³»¿ëÀ» ÀÓ½Ã·Î ÀúÀåÇÒ ¹®ÀÚ¿­µéÀÌ´Ù.
+	// acc.txt, name.txt, bal.txtì—ì„œ ì½ì€ ë‚´ìš©ì„ ìž„ì‹œë¡œ ì €ìž¥í•  ë¬¸ìžì—´ë“¤ì´ë‹¤.
 
 	FILE *rfp1;
 	FILE *rfp2;
@@ -18,44 +20,47 @@ void delete_account(int client) // °èÁÂ Á¦°Å¸¦ ÇÏ´Â ÇÔ¼öÀÌ´Ù.
 	FILE *wfp1;
 	FILE *wfp2;
 	FILE *wfp3;
-	// ÀÐ±â, ¾²±â¿¡ ¾µ ÆÄÀÏ Æ÷ÀÎÅÍ 6°³¸¦ ¼±¾ðÇÑ´Ù.
+	
 	fopen_s(&rfp1, "acc.txt", "r");
 	fopen_s(&rfp2, "name.txt", "r");
 	fopen_s(&rfp3, "balance.txt", "r");
 	fopen_s(&wfp1, "acc_temp.txt", "w");
 	fopen_s(&wfp2, "name_temp.txt", "w");
 	fopen_s(&wfp3, "balance_temp.txt", "w");
-	// ±âÁ¸ acc.txt, name.txt, balance.txt´Â ÀÐ±â ¸ðµå·Î, ÀÓ½Ã·Î ³»¿ëÀ» ÀúÀåÇÒ ÆÄÀÏµéÀº
-	// ¾²±â ¸ðµå·Î ¿¬´Ù.
-	for (i = 0; ; i++) // ÃÊ±ê°ª, Áõ°¨½Ä¸¸ ³Ö°í Á¶°Ç½ÄÀº »« ¹«ÇÑ ¹Ýº¹ for¹®ÀÌ´Ù.
+	// ê¸°ì¡´ acc.txt, name.txt, balance.txtëŠ” ì½ê¸° ëª¨ë“œë¡œ, 
+	// ìž„ì‹œë¡œ ë‚´ìš©ì„ ì €ìž¥í•  íŒŒì¼ë“¤ì€ ì“°ê¸° ëª¨ë“œë¡œ ì—°ë‹¤.
+	
+	for (i = 0; ; i++)
 	{
-		if (i != client) // i°¡ client°¡ ¾Æ´Ò ¶§ ±âÁ¸ ÆÄÀÏ¿¡¼­ ÀÐÀº µÚ ÀÓ½Ã ÆÄÀÏ¿¡ ÀÔ·ÂÇÑ´Ù.
+		if (i != client) // iê°€ clientê°€ ì•„ë‹ ë•Œ ê¸°ì¡´ íŒŒì¼ì—ì„œ ì½ì€ ë’¤ ìž„ì‹œ íŒŒì¼ì— ìž…ë ¥í•œë‹¤.
 		{	
 			fgets(acc, sizeof(acc), rfp1);
 			fgets(name, sizeof(name), rfp2);
 			fgets(bal, sizeof(bal), rfp3);
-			// ±âÁ¸ ÆÄÀÏ¿¡¼­ ³»¿ëÀ» ÀÐ¾î¿Â´Ù.
-			if (feof(rfp1) && feof(rfp2) && feof(rfp3)) // ÆÄÀÏÀÇ ³¡ÀÌ¶ó¸é ¹Ýº¹À» Á¾·áÇÑ´Ù.
+			// ê¸°ì¡´ íŒŒì¼ì—ì„œ ë‚´ìš©ì„ ì½ì–´ì˜¨ë‹¤.
+			
+			if (feof(rfp1) && feof(rfp2) && feof(rfp3)) // íŒŒì¼ì˜ ëì´ë¼ë©´ ë°˜ë³µì„ ì¢…ë£Œí•œë‹¤.
 				break;
 
 			acc[strlen(acc)] = '\0';
 			name[strlen(name)] = '\0';
 			bal[strlen(bal)] = '\0';
-			// acc, name, balÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
+			// acc, name, balì˜ ë§ˆì§€ë§‰ ì›ì†Œì— NULL ê°’ì„ ëŒ€ìž…í•œë‹¤.
+			
 			fprintf(wfp1, "%s", acc);
 			fprintf(wfp2, "%s", name);
 			fprintf(wfp3, "%s", bal);
-			// ÀÓ½Ã ÆÄÀÏ¿¡ ±âÁ¸ ÆÄÀÏ¿¡¼­ ÀÐ¾î¿Â °í°´ Á¤º¸¸¦ ÀÔ·ÂÇÑ´Ù.
+			// ìž„ì‹œ íŒŒì¼ì— ê¸°ì¡´ íŒŒì¼ì—ì„œ ì½ì–´ì˜¨ ê³ ê° ì •ë³´ë¥¼ ìž…ë ¥í•œë‹¤.
 		}
 
-		if (i == client) // i°¡ Á¦°ÅÇÒ °í°´ ¹øÈ£¿Í °°´Ù¸é
+		if (i == client) // iê°€ ì œê±°í•  ê³ ê° ë²ˆí˜¸ì™€ ê°™ë‹¤ë©´
 		{
 			fgets(acc, sizeof(acc), rfp1);
 			fgets(name, sizeof(name), rfp2);
 			fgets(bal, sizeof(bal), rfp3);
-			// ÀÐ±â¸¸ ÇÑ´Ù. ¸¸ÀÏ ÀÐÁö ¾Ê°í ³Ñ¾î°£´Ù¸é ÄÄÇ»ÅÍ´Â ±¸ºÐÇÏÁö ¸øÇÏ°í, i + 1ÀÌ µÇ¾úÀ» ¶§
-			// client °í°´ÀÇ Á¤º¸¸¦ ÀÐ¾î¹ö¸°´Ù. ÀÐÀº µÚ ¾²Áö ¾Ê´Â °ÍÀ¸·Î ÀüÃ¼ ¸®½ºÆ®¿¡¼­ Æ¯Á¤
-			// °í°´ÀÇ Á¤º¸¸¦ Á¦°ÅÇÑ´Ù.
+			// ì½ê¸°ë§Œ í•œë‹¤. ë§Œì¼ ì½ì§€ ì•Šê³  ë„˜ì–´ê°„ë‹¤ë©´ ì»´í“¨í„°ëŠ” êµ¬ë¶„í•˜ì§€ ëª»í•˜ê³ , i + 1ì´ ë˜ì—ˆì„ ë•Œ
+			// clientë²ˆì§¸ ê³ ê°ì˜ ì •ë³´ë¥¼ ì½ì–´ë²„ë¦°ë‹¤. ì½ì€ ë’¤ ì“°ì§€ ì•ŠëŠ” ê²ƒìœ¼ë¡œ ì „ì²´ ë¦¬ìŠ¤íŠ¸ì—ì„œ íŠ¹ì •
+			// ê³ ê°ì˜ ì •ë³´ë¥¼ ì œê±°í•œë‹¤.
 		}	
 	}
 
@@ -65,14 +70,15 @@ void delete_account(int client) // °èÁÂ Á¦°Å¸¦ ÇÏ´Â ÇÔ¼öÀÌ´Ù.
 	fclose(wfp1);
 	fclose(wfp2);
 	fclose(wfp3);
-	// ÆÄÀÏ Æ÷ÀÎÅÍ 6°³¸¦ ´Ý´Â´Ù.
+	
 	fopen_s(&rfp1, "acc_temp.txt", "r");
 	fopen_s(&rfp2, "name_temp.txt", "r");
 	fopen_s(&rfp3, "balance_temp.txt", "r");
 	fopen_s(&wfp1, "acc.txt", "w");
 	fopen_s(&wfp2, "name.txt", "w");
 	fopen_s(&wfp3, "balance.txt", "w");
-	// ÀÓ½Ã ÆÄÀÏµéÀ» ÀÐ±â ¸ðµå·Î, ±âÁ¸ ÆÄÀÏµéÀ» ¾²±â ¸ðµå·Î ¿¬´Ù.
+	// ìž„ì‹œ íŒŒì¼ë“¤ì„ ì½ê¸° ëª¨ë“œë¡œ, ê¸°ì¡´ íŒŒì¼ë“¤ì„ ì“°ê¸° ëª¨ë“œë¡œ ì—°ë‹¤.
+	
 	while (1)
 	{
 		fgets(acc, sizeof(acc), rfp1);
@@ -85,7 +91,7 @@ void delete_account(int client) // °èÁÂ Á¦°Å¸¦ ÇÏ´Â ÇÔ¼öÀÌ´Ù.
 		fprintf(wfp1, "%s", acc);
 		fprintf(wfp2, "%s", name);
 		fprintf(wfp3, "%s", bal);
-	}	// Æ¯Á¤ °í°´ Á¤º¸°¡ Á¦°ÅµÈ ÀÓ½Ã ÆÄÀÏµéÀÇ ³»¿ëÀ» ±âÁ¸ ÆÄÀÏ¿¡ µ¤¾î¾´´Ù.
+	}	// íŠ¹ì • ê³ ê° ì •ë³´ê°€ ì œê±°ëœ ìž„ì‹œ íŒŒì¼ë“¤ì˜ ë‚´ìš©ì„ ê¸°ì¡´ íŒŒì¼ì— ë®ì–´ì“´ë‹¤.
 
 	fclose(rfp1);
 	fclose(rfp2);
@@ -94,17 +100,15 @@ void delete_account(int client) // °èÁÂ Á¦°Å¸¦ ÇÏ´Â ÇÔ¼öÀÌ´Ù.
 	fclose(wfp2);
 	fclose(wfp3);
 
-	// ÆÄÀÏ Æ÷ÀÎÅÍ 6°³¸¦ ´Ý´Â´Ù.
-
-	printf("°èÁÂ°¡ Á¦°ÅµÇ¾ú½À´Ï´Ù. ÀÌ¿ë °¨»çÇÕ´Ï´Ù.\n\n");
+	printf("ê³„ì¢Œê°€ ì œê±°ë˜ì—ˆìŠµë‹ˆë‹¤. ì´ìš© ê°ì‚¬í•©ë‹ˆë‹¤.\n\n");
 
 	while (1)
 	{
-		printf("ÃÊ±â È­¸éÀ¸·Î °¡½Ã·Á¸é 0À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
+		printf("ì´ˆê¸° í™”ë©´ìœ¼ë¡œ ê°€ì‹œë ¤ë©´ 0ì„ ìž…ë ¥í•´ì£¼ì„¸ìš” : ");
 		scanf_s("%d", &end);
-		if (end == 0) // end¿¡ 0À» ÀÔ·Â¹ÞÀ¸¸é delete_account() ÇÔ¼ö¸¦ Á¾·áÇÑ´Ù.
+		if (end == 0) // endì— 0ì„ ìž…ë ¥ë°›ìœ¼ë©´ delete_account() í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
 			return 0;
 		else
-			printf("\nÀß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n\n");
+			printf("\nìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n\n");
 	}
 }

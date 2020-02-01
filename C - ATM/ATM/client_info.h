@@ -5,8 +5,6 @@ struct info {
 	char name[30];
 	char balance[30];
 };
-// °í°´ Á¤º¸¸¦ ´ãÀ» ±¸Á¶Ã¼ info¸¦ ¼±¾ðÇÑ´Ù. ³»¿ëÀº °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í¸¦ ÀÔ·ÂÇÒ ¹®ÀÚ¿­
-// 3°³ÀÌ´Ù.
+// ê³ ê° ì •ë³´ë¥¼ ë‹´ì„ êµ¬ì¡°ì²´ infoë¥¼ ì„ ì–¸í•œë‹¤.
 struct info *s;
-// ¹®ÀÚ¿­ Æ÷ÀÎÅÍ º¯¼ö s¸¦ ¼±¾ðÇÑ´Ù. s¸¦ account_load()¿¡¼­ µ¿ÀûÇÒ´çÇÏ´Â °ÍÀ¸·Î
-// °í°´ÀÇ ¼ö¿¡ ¸ÂÃç °í°´ Á¤º¸¸¦ ÀÔ·Â¹ÞÀ» ¼ö ÀÖ´Ù.
+// ë¬¸ìžì—´ í¬ì¸í„° ë³€ìˆ˜ së¥¼ ì„ ì–¸í•œë‹¤.

@@ -4,96 +4,104 @@
 #include "client_info.h"
 #include "function.h"
 
-int deposit(int client) // ÀÔ±İÀ» ´ã´çÇÏ´Â ÇÔ¼öÀÌ´Ù.
+int deposit(int client) // ì…ê¸ˆì„ ë‹´ë‹¹í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
 {
 	int i, len, result, end;
-	// i : ¹İº¹¹®¿¡ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù. len : °í°´ÀÇ ÀÜ°íÀÇ ±æÀÌ¸¦ ÀúÀåÇÒ º¯¼öÀÌ´Ù.
-	// result : ÀÔ±İÇÑ °á°ú¸¦ ÀúÀåÇÒ º¯¼öÀÌ´Ù.
-	// end : ÀÔ±İ ÈÄ °í°´¿¡°Ô ÃÊ±â È­¸éÀ¸·Î °¥ Áö ¹°¾îº¼ ¶§ »ç¿ëµÇ´Â º¯¼öÀÌ´Ù.
+	// len : ê³ ê°ì˜ ì”ê³ ì˜ ê¸¸ì´ë¥¼ ì €ì¥í•  ë³€ìˆ˜ì´ë‹¤.
+	// result : ì…ê¸ˆí•œ ê²°ê³¼ë¥¼ ì €ì¥í•  ë³€ìˆ˜ì´ë‹¤.
+	// end : end == 0ì´ë©´ í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
+	
 	char c_money[16], d_money[16], b_money[16], bal[21];
-	// client_money(±âÁ¸ ÀÜ°í), deposit_money(ÀÔ±İÇÒ µ·), balance_money(±âÁ¸ ÀÜ°í + ÀÔ±İÇÒ µ·)
+	// client_money(ê¸°ì¡´ ì”ê³ ), deposit_money(ì…ê¸ˆí•  ëˆ), balance_money(ê¸°ì¡´ ì”ê³  + ì…ê¸ˆí•  ëˆ)
+	
 	FILE *rfp;
 	FILE *wfp;
-	// ÆÄÀÏ Æ÷ÀÎÅÍ 2°³¸¦ ¼±¾ğÇÑ´Ù.
+	
 	fopen_s(&rfp, "balance.txt", "r");
 	fopen_s(&wfp, "balance_temp.txt", "w");
-	// balance.txt¸¦ ÀĞ±â ¸ğµå·Î, balance_temp.txt¸¦ ¾²±â ¸ğµå·Î ¿¬´Ù.
+	// balance.txtë¥¼ ì½ê¸° ëª¨ë“œë¡œ, balance_temp.txtë¥¼ ì“°ê¸° ëª¨ë“œë¡œ ì—°ë‹¤.
+	
 	for (i = 0; i < 16; i++)
 	{
 		c_money[i] = s[client].balance[i + 5];
-	}	// ±âÁ¸ ÀÜ°í°¡ ¾ó¸¶ÀÎÁö c_money¿¡ ÀúÀåÇÑ´Ù.
+	}	
+	// ê¸°ì¡´ ì”ê³ ê°€ ì–¼ë§ˆì¸ì§€ c_moneyì— ì €ì¥í•œë‹¤.
 
-	result = atoi(c_money); // result¿¡ c_money¸¦ Á¤¼ö·Î º¯È¯ÇÑ °ªÀ» ´ëÀÔÇÑ´Ù.
+	result = atoi(c_money); // resultì— c_moneyë¥¼ ì •ìˆ˜ë¡œ ë³€í™˜í•œ ê°’ì„ ëŒ€ì…í•œë‹¤.
 
-	printf("ÀÔ±İÇÏ½Ç ±İ¾×À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
-	scanf_s("%s", d_money, 16); // ÀÔ±İÇÒ ±İ¾×À» ÀÔ·Â¹Ş´Â´Ù.
+	printf("ì…ê¸ˆí•˜ì‹¤ ê¸ˆì•¡ì„ ì…ë ¥í•´ì£¼ì„¸ìš” : ");
+	scanf_s("%s", d_money, 16); // ì…ê¸ˆí•  ê¸ˆì•¡ì„ ì…ë ¥ë°›ëŠ”ë‹¤.
 
-	result += atoi(d_money); // ÀÔ±İÇÒ ±İ¾×ÀÎ d_money¸¦ Á¤¼ö·Î ¹Ù²ã result¿¡ ´õÇÑ´Ù.
+	result += atoi(d_money); // ì…ê¸ˆí•  ê¸ˆì•¡ì¸ d_moneyë¥¼ ì •ìˆ˜ë¡œ ë°”ê¿” resultì— ë”í•œë‹¤.
 
 	_itoa_s(result, b_money, sizeof(b_money), 10);
-	// ÀÔ±İ ÈÄ ÀÜ°í result¸¦ ¹®ÀÚ¿­·Î ¹Ù²ã b_money¿¡ ÀúÀåÇÑ´Ù.
+	// ì…ê¸ˆ í›„ ì”ê³  resultë¥¼ ë¬¸ìì—´ë¡œ ë°”ê¿” b_moneyì— ì €ì¥í•œë‹¤.
+	
 	for (i = 0; i < 16; i++)
 		s[client].balance[i + 5] = b_money[i];
-	// °í°´ÀÇ ±âÁ¸ ÀÜ°í¿¡ b_money¸¦ ´ëÀÔÇÑ´Ù.
+	// ê³ ê°ì˜ ê¸°ì¡´ ì”ê³ ì— b_moneyë¥¼ ëŒ€ì…í•œë‹¤.
+	
 	len = strlen(s[client].balance);
 
-	printf("\nÀÔ±İÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n\n");
+	printf("\nì…ê¸ˆì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n\n");
 
-	for (i = 5; i < 20; i++) // °èÁÂÀÇ ÀÜ°í¸¦ Ãâ·ÂÇÏ´Â for¹®ÀÌ´Ù.
+	for (i = 5; i < 20; i++) // ê³„ì¢Œì˜ ì”ê³ ë¥¼ ì¶œë ¥í•˜ëŠ” forë¬¸ì´ë‹¤.
 	{
 		if (i == 5)
-			printf("°í°´´ÔÀÇ °èÁÂ ÀÜ°í´Â ");
+			printf("ê³ ê°ë‹˜ì˜ ê³„ì¢Œ ì”ê³ ëŠ” ");
 
 		if (s[client].balance[i] != '\0') 
 			printf("%c", s[client].balance[i]);
-		// s[client].balance[i]°¡ NULL°ªÀÌ ¾Æ´Ò ¶§±îÁö s[client].balance[i]¸¦ Ãâ·ÂÇÑ´Ù.
-		if ((len - i + 2) % 3 == 0 && i != (len - 1)) // 3ÀÚ¸®¸¶´Ù ','·Î ²÷¾îÁØ´Ù.
+		// s[client].balance[i]ê°€ NULLê°’ì´ ì•„ë‹ ë•Œê¹Œì§€ s[client].balance[i]ë¥¼ ì¶œë ¥í•œë‹¤.
+		
+		if ((len - i + 2) % 3 == 0 && i != (len - 1)) // 3ìë¦¬ë§ˆë‹¤ ','ë¡œ ëŠì–´ì¤€ë‹¤.
 			printf(",");
 
-		if (i == (len - 1)) // ÀÜ°í¸¦ ¸ğµÎ Ãâ·ÂÇÏ¸é ¸Ç µÚ¿¡ ºÙ¿©ÁØ´Ù.
+		if (i == (len - 1))
 		{
-			printf("¿øÀÔ´Ï´Ù.\n\n");
+			printf("ì›ì…ë‹ˆë‹¤.\n\n");
 			break;
-		}
+		} // ì”ê³ ë¥¼ ëª¨ë‘ ì¶œë ¥í•˜ë©´ ë§¨ ë’¤ì— ë¶™ì—¬ì¤€ë‹¤.
 	}
 
-	for (i = 0; ; i++) // ¼öÁ¤µÈ ÀÜ°í¸¦ ÆÄÀÏ¿¡ ÀÔ·ÂÇÏ´Â for¹®ÀÌ´Ù.
+	for (i = 0; ; i++) // ìˆ˜ì •ëœ ì”ê³ ë¥¼ íŒŒì¼ì— ì…ë ¥í•˜ëŠ” forë¬¸ì´ë‹¤.
 	{
 		if (i != client)
 		{
-			fgets(bal, sizeof(bal), rfp); // balance.txt¿¡¼­ ÇÑ ÁÙ ÀĞ¾î bal¿¡ ÀúÀåÇÑ´Ù.
+			fgets(bal, sizeof(bal), rfp); // balance.txtì—ì„œ í•œ ì¤„ ì½ì–´ balì— ì €ì¥í•œë‹¤.
 
-			if (feof(rfp)) // ÆÄÀÏÀÇ ³¡ÀÌ¶ó¸é ¹İº¹À» Á¾·áÇÑ´Ù.
+			if (feof(rfp)) 
 				break;
+			// íŒŒì¼ì˜ ëì´ë¼ë©´ ë°˜ë³µì„ ì¢…ë£Œí•œë‹¤.
+			
+			bal[strlen(bal)] = '\0';
 
-			bal[strlen(bal)] = '\0'; // balÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
-
-			fprintf(wfp, "%s", bal); // client°¡ ¾Æ´Ñ °ÍÀ» ÀüºÎ balance_temp.txt¿¡ ÀÛ¼º.
+			fprintf(wfp, "%s", bal); // clientê°€ ì•„ë‹Œ ê²ƒì„ ì „ë¶€ balance_temp.txtì— ì‘ì„±.
 		}
 
 		if (i == client)
 		{
 			fgets(bal, sizeof(bal), rfp); 
-			// ¿©±â¼­ ÀĞÁö ¾ÊÀ¸¸é ÆÄÀÏ¿£ s[client].balance¿Í balance.txt¿¡
-			// ÀĞÈ÷±â ÀüÀÇ ¹®ÀÚ¿­ÀÌ °°ÀÌ ¾²ÀÎ´Ù.
+			// ì—¬ê¸°ì„œ ì½ì§€ ì•Šìœ¼ë©´ íŒŒì¼ì—” s[client].balanceì™€ balance.txtì—
+			// ì½íˆê¸° ì „ì˜ ë¬¸ìì—´ì´ ê°™ì´ ì“°ì¸ë‹¤.
 			fprintf(wfp, "%s\n", s[client].balance);
-			// balance_temp.txt¿¡ °í°´ÀÇ ¼öÁ¤µÈ ÀÜ°í¸¦ ÀÔ·ÂÇÑ´Ù.
+			// balance_temp.txtì— ê³ ê°ì˜ ìˆ˜ì •ëœ ì”ê³ ë¥¼ ì…ë ¥í•œë‹¤.
 		}
 	}
 
 	fclose(rfp);
 	fclose(wfp);
-	// ÆÄÀÏ Æ÷ÀÎÅÍ 2°³¸¦ ´İ´Â´Ù.
+	
 	balance_modify();
-	// ÇÔ¼ö balance_modify(balance_temp.txt¿¡¼­ ÀĞ¾î balance.txt¿¡ ¾²´Â ÇÔ¼ö)
-	// ¸¦ ½ÇÇàÇÑ´Ù.
+	// í•¨ìˆ˜ balance_modify(ì”ê³  ìˆ˜ì • í•¨ìˆ˜)ë¥¼ ì‹¤í–‰í•œë‹¤.
+	
 	while (1)
 	{
-		printf("ÃÊ±â È­¸éÀ¸·Î °¡½Ã·Á¸é 0À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
+		printf("ì´ˆê¸° í™”ë©´ìœ¼ë¡œ ê°€ì‹œë ¤ë©´ 0ì„ ì…ë ¥í•´ì£¼ì„¸ìš” : ");
 		scanf_s("%d", &end);
-		if (end == 0) // end¿¡ 0À» ÀÔ·Â¹ŞÀ¸¸é deposit() ÇÔ¼ö¸¦ Á¾·áÇÑ´Ù.
+		if (end == 0) // endì— 0ì„ ì…ë ¥ë°›ìœ¼ë©´ deposit() í•¨ìˆ˜ë¥¼ ì¢…ë£Œí•œë‹¤.
 			return 0;
 		else
-			printf("\nÀß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n\n");
+			printf("\nì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n\n");
 	}
 }

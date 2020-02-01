@@ -4,77 +4,77 @@
 #include "client_info.h"
 
 int account_judge(int count) 
-{	// ÃÑ °í°´¼ö¸¦ ÀÔ·Â ¹Þ¾Æ °í°´ÀÌ ÀÔ·ÂÇÑ °èÁÂ¹øÈ£¿Í °èÁÂÀÇ ºñ¹Ð¹øÈ£°¡ ¸Â´ÂÁö ÆÇº°ÇÏ´Â ÇÔ¼ö.
+{	// ì´ ê³ ê°ìˆ˜ë¥¼ ìž…ë ¥ ë°›ì•„ ê³ ê°ì´ ìž…ë ¥í•œ ê³„ì¢Œë²ˆí˜¸ì™€ ê³„ì¢Œì˜ ë¹„ë°€ë²ˆí˜¸ê°€ ë§žëŠ”ì§€ íŒë³„í•˜ëŠ” í•¨ìˆ˜.
 	char account[17], password[5], temp_a[17], temp_p[3][5];
-	// account : °í°´ÀÌ ÀÔ·ÂÇÑ °èÁÂ¹øÈ£. 
-	// password : °í°´ÀÌ ÀÔ·ÂÇÑ ºñ¹Ð¹øÈ£.
-	// temp_a : °í°´Á¤º¸¸¦ ´ãÀº ±¸Á¶Ã¼¿¡´Â °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í¸¶´Ù ºñ¹Ð¹øÈ£°¡
-	// Æ÷ÇÔµÇ¾î ÀÖ´Ù. temp_a¿£ ºñ¹Ð¹øÈ£¸¦ »« °èÁÂ¹øÈ£°¡ ÀúÀåµÈ´Ù.
-	// temp_p : ±¸Á¶Ã¼¿¡ ÀúÀåµÈ °èÁÂ¹øÈ£, ÀÌ¸§, ÀÜ°í¿¡¼­ ºñ¹Ð¹øÈ£¸¦ ÀÐ¾î¿Í ÀúÀåÇÏ´Â 
-	// ÀÌÂ÷¿ø ¹®ÀÚ¿­ÀÌ´Ù.
-	int i, j, client = 0, judge = 0;
-	// i, j : ¹Ýº¹¹® »ç¿ëÀ» À§ÇØ ¼±¾ðÇÑ º¯¼ö. 
-	// client : °í°´ÀÌ °í°´ ¸®½ºÆ®¿¡¼­ ¸î ¹øÂ°ÀÎÁö ÀúÀåµÇ¾î ÇÔ¼ö°¡ ³¡³¯ ¶§ Ãâ·ÂµÇ´Â º¯¼ö.
-	// judge : °èÁÂ¹øÈ£¿Í ºñ¹Ð¹øÈ£°¡ ¸ðµÎ ¸Â´Ù¸é 1ÀÌ µÇ´Â º¯¼öÀÌ´Ù. 0À¸·Î ÃÊ±âÈ­.
-	printf("°èÁÂ¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
-	scanf_s("%s", account, 17); // °èÁÂ¹øÈ£¸¦ ÀÔ·Â¹Þ´Â´Ù.
+	// account : ê³ ê°ì´ ìž…ë ¥í•œ ê³„ì¢Œë²ˆí˜¸. 
+	// password : ê³ ê°ì´ ìž…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸.
+	// temp_a : ê³ ê° ì •ë³´ì—ì„œ ì½ì€ ê³„ì¢Œë²ˆí˜¸ê°€ ì €ìž¥ëœë‹¤.
+	// temp_p : ê³ ê°ì •ë³´ë¥¼ í‚¤ì›Œë“œë¡œ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì½ì–´ì™€ ì €ìž¥í•˜ëŠ” ì´ì°¨ì› ë¬¸ìžì—´ì´ë‹¤.
 	
-	for (i = 0; i < count; i++) // ÃÑ °í°´¼ö¸¸Å­ ¹Ýº¹ÇÏ´Â for¹®ÀÌ´Ù.
+	int i, j, client = 0, judge = 0;
+	// client : ê³ ê°ì´ ê³ ê° ë¦¬ìŠ¤íŠ¸ì—ì„œ ëª‡ ë²ˆì§¸ì¸ì§€ ì €ìž¥ë˜ì–´ í•¨ìˆ˜ê°€ ëë‚  ë•Œ ì¶œë ¥ë˜ëŠ” ë³€ìˆ˜.
+	// judge : ê³„ì¢Œë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ê°€ ëª¨ë‘ ë§žë‹¤ë©´ 1ì´ ë˜ëŠ” ë³€ìˆ˜ì´ë‹¤. 0ìœ¼ë¡œ ì´ˆê¸°í™”.
+	
+	printf("ê³„ì¢Œë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš” : ");
+	scanf_s("%s", account, 17); // ê³„ì¢Œë²ˆí˜¸ë¥¼ ìž…ë ¥ë°›ëŠ”ë‹¤.
+	
+	for (i = 0; i < count; i++)
 	{
 		for (j = 0; j < 16; j++)
 		{
-			temp_a[j] = s[i].acc[j + 5]; // ÆÇÁ¤À» À§ÇØ temp_a¿¡ °í°´ÀÇ °èÁÂ¹øÈ£¸¦ ÀúÀåÇÑ´Ù.
+			temp_a[j] = s[i].acc[j + 5]; // íŒì •ì„ ìœ„í•´ temp_aì— ê³ ê°ì˜ ê³„ì¢Œë²ˆí˜¸ë¥¼ ì €ìž¥í•œë‹¤.
 		}
-		temp_a[16] = '\0'; // temp_aÀÇ ¸¶Áö¸· ¿ø¼Ò¸¦ NULL °ªÀ¸·Î ÁöÁ¤ÇÑ´Ù.
+		temp_a[16] = '\0';
 
-		if (strncmp(account, temp_a, 17) == 0)
+		if (strncmp(account, temp_a, 17) == 0) // ê³ ê°ì´ ìž…ë ¥í•œ ê³„ì¢Œë²ˆí˜¸ì™€ temp_aê°€ ì¼ì¹˜í•˜ë©´
 			judge = 1;
 		else
 			judge = 0;
-		// °í°´ÀÌ ÀÔ·ÂÇÑ °èÁÂ¹øÈ£¿Í temp_a°¡ ÀÏÄ¡ÇÏ¸é judge¿¡ 1À» ´ëÀÔÇÑ´Ù.
+		
 		if (judge == 1)
 		{
 			client = i;
 			break;
-		} // judge°¡ 1ÀÌ¸é client¿¡ 1À» ´ëÀÔÇÏ°í °èÁÂ¹øÈ£¸¦ ÆÇÁ¤ÇÏ´Â for¹®À» Á¾·áÇÑ´Ù.
+		} // judgeê°€ 1ì´ë©´ clientì— ië¥¼ ëŒ€ìž…í•˜ê³  ê³„ì¢Œë²ˆí˜¸ë¥¼ íŒì •í•˜ëŠ” forë¬¸ì„ ì¢…ë£Œí•œë‹¤.
 
 		if (i == count - 1 && judge == 0)
-		{	// for¹®ÀÌ ³¡³ª±â Àü¿¡ judge°¡ 0ÀÌ¶ó¸é °èÁÂ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÑ °ÍÀÌ´Ù.
+		{	
 			printf("\n");
-			printf("°èÁÂ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+			printf("ê³„ì¢Œë²ˆí˜¸ë¥¼ ìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 			return -1;
-		}
+		}	// forë¬¸ì´ ëë‚˜ê¸° ì „ì— judgeê°€ 0ì´ë¼ë©´ ê³„ì¢Œë²ˆí˜¸ë¥¼ ìž˜ëª» ìž…ë ¥í•œ ê²ƒì´ë‹¤.
 	}
 
-	printf("\nºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä : ");
-	scanf_s("%s", password, 5); // ºñ¹Ð¹øÈ£¸¦ ÀÔ·Â¹Þ´Â´Ù.
+	printf("\në¹„ë°€ë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ì£¼ì„¸ìš” : ");
+	scanf_s("%s", password, 5); // ë¹„ë°€ë²ˆí˜¸ë¥¼ ìž…ë ¥ë°›ëŠ”ë‹¤.
 	printf("\n");
+	
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 4; j++)
 		{
-			if (i == 0) // °èÁÂ¹øÈ£¿Í ÇÔ²² ÀúÀåµÈ ºñ¹Ð¹øÈ£¸¦ temp_p[0]¿¡ ÀÔ·ÂÇÑ´Ù.
+			if (i == 0) // ê³„ì¢Œë²ˆí˜¸ì™€ í•¨ê»˜ ì €ìž¥ëœ ë¹„ë°€ë²ˆí˜¸ë¥¼ temp_p[0]ì— ìž…ë ¥í•œë‹¤.
 				temp_p[i][j] = s[client].acc[j]; 
-			if (i == 1) // ÀÌ¸§°ú ÇÔ²² ÀúÀåµÈ ºñ¹Ð¹øÈ£¸¦ temp_p[1]¿¡ ÀÔ·ÂÇÑ´Ù.
+			if (i == 1) // ì´ë¦„ê³¼ í•¨ê»˜ ì €ìž¥ëœ ë¹„ë°€ë²ˆí˜¸ë¥¼ temp_p[1]ì— ìž…ë ¥í•œë‹¤.
 				temp_p[i][j] = s[client].name[j];
-			if (i == 2) // ÀÜ°í¿Í ÇÔ²² ÀúÀåµÈ ºñ¹Ð¹øÈ£¸¦ temp_p[2]¿¡ ÀÔ·ÂÇÑ´Ù.
+			if (i == 2) // ìž”ê³ ì™€ í•¨ê»˜ ì €ìž¥ëœ ë¹„ë°€ë²ˆí˜¸ë¥¼ temp_p[2]ì— ìž…ë ¥í•œë‹¤.
 				temp_p[i][j] = s[client].balance[j];
 		}
-		temp_p[i][4] = '\0'; // temp_p[i]ÀÇ ¸¶Áö¸· ¿ø¼Ò¿¡ NULL °ªÀ» ´ëÀÔÇÑ´Ù.
-
-		if (strncmp(password, temp_p[i], 5) == 0) 
+		temp_p[i][4] = '\0';
+		
+		if (strncmp(password, temp_p[i], 5) == 0) // temp_p[i]ê°€ ê³ ê°ì´ ìž…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸ì™€ ê°™ìœ¼ë©´
 			judge = 1;
 		else
 			judge = 0;
-		// temp_p[i]°¡ °í°´ÀÌ ÀÔ·ÂÇÑ ºñ¹Ð¹øÈ£¿Í °°À¸¸é judge¿¡ 1À» ´ëÀÔÇÑ´Ù.
-		// ±×·¸Áö ¾ÊÀ¸¸é judge¿¡ 0À» ´ëÀÔÇÑ´Ù.
 	}
 
-	if (judge == 1) // °èÁÂ¹øÈ£¿Í ºñ¹Ð¹øÈ£°¡ ¸ðµÎ ¸Â´Ù¸é judge´Â 1ÀÌ´Ù.
-		return client; // °í°´ ¸®½ºÆ®¿¡¼­ °í°´ÀÌ ¸î ¹øÂ°ÀÎÁö ¾Ë·ÁÁÖ´Â º¯¼ö client¸¦ Ãâ·ÂÇÑ´Ù.
-	else // judge°¡ 1ÀÌ ¾Æ´Ï¶ó¸é °èÁÂ¹øÈ£´Â ¸Â°Ô ÀÔ·ÂÇßÁö¸¸ ºñ¹Ð¹øÈ£°¡ Æ²¸° °ÍÀÌ´Ù.
+	if (judge == 1) 
+		return client;
+	// ê³„ì¢Œë²ˆí˜¸ì™€ ë¹„ë°€ë²ˆí˜¸ê°€ ëª¨ë‘ ë§žë‹¤ë©´ judgeëŠ” 1ì´ë‹¤.
+	// ê³ ê° ë¦¬ìŠ¤íŠ¸ì—ì„œ ê³ ê°ì´ ëª‡ ë²ˆì§¸ì¸ì§€ ì•Œë ¤ì£¼ëŠ” ë³€ìˆ˜ clientë¥¼ ì¶œë ¥í•œë‹¤.
+	else
 	{
-		printf("ºñ¹Ð¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.\n");
+		printf("ë¹„ë°€ë²ˆí˜¸ë¥¼ ìž˜ëª» ìž…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
 		return -1; 
-	}	
+	}	// judgeê°€ 1ì´ ì•„ë‹ˆë¼ë©´ ê³„ì¢Œë²ˆí˜¸ëŠ” ë§žê²Œ ìž…ë ¥í–ˆì§€ë§Œ ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦° ê²ƒì´ë‹¤.
 }
